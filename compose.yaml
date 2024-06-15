@@ -7,7 +7,8 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=password
-
+    volumes:
+      - mongo_data:/data/db
   mongo-express:
     image: mongo-express
     ports:
@@ -17,12 +18,12 @@ services:
       - ME_CONFIG_MONGODB_ADMINPASSWORD=password
       - ME_CONFIG_MONGODB_SERVER=mongodb
 
-  app:
-    image: myapp:1.0
-    build:
-      context: .
-      dockerfile: Dockerfile
+  myjsapp:
+    image: blessednur/myapp:1.0
     ports:
       - "3000:3000"
     environment:
       - DOCKER_ENV=docker
+volumes:
+  mongo_data:
+    driver: local
